@@ -3,19 +3,20 @@ import "./styles.css";
 import { NewTodoForm } from "./NewTodoForm";
 
 export default function App() {
-  const [newItem, setNewItem] = useState("")
   const [todos, setTodos] = useState([])
 
-  function handleSubmit(e){
-    e.preventDefault()
-
-    setTodos( (currentTodos) => {
-     return  [...currentTodos, 
-        {id: crypto.randomUUID(), title: newItem, completed: false},
+  function addTodo(title){
+    setTodos(currentTodos => {
+      return [
+        ...currentTodos,
+        {id: crypto.randomUUID(), title, completed: false}
       ]
     })
+    
 
-    setNewItem("");
+    
+
+    
   }
 
   function toggleTodo(id, completed) {
@@ -39,7 +40,7 @@ export default function App() {
 
   return (
     <>
-    <NewTodoForm/>
+    <NewTodoForm onSubmit={addTodo}/>
   <h1 className="header">Todo List</h1>
   <ul className="list">
     {todos.length === 0 && "No Todos"}
